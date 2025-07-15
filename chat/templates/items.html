@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+
+{% block title %}Чат{% endblock %}
+
+{% block content %}
+    <h2>Чат</h2>
+    <form method="post" class="box">
+        <input type="text" name="message" placeholder="Message" class="input">
+        <input type="text" name="sign" required placeholder="Sign" class="input">
+        <button type="submit" class="button">Send</button>
+    </form>
+    <p>
+    <div>
+        {% for item in items[::-1] %}
+            <div class="box">
+                {{ item.message }}
+                <div class="is-size-7 has-text-grey">{{ item.sign }} | {{ item.datetime }}</div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

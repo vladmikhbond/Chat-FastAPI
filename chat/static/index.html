@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Чат</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css">
+</head>
+<body>
+    <div class="content">
+        <h2>Чат</h2>
+        <form id="formEl" class="box">
+            <input type="text" id="messageEl" name="message" placeholder="Message" class="input">
+            <input type="text" name="sign" required placeholder="Sign" class="input">
+            <button type="submit" class="button">Send</button>
+        </form>
+        <p>
+        <div id="itemsEl"></div>
+    </div>
+    <script>
+        const formEl = document.getElementById('formEl');
+        const itemsEl = document.getElementById('itemsEl');
+        const messageEl = document.getElementById('messageEl');
+
+        function fillChatHistory(items) {
+            var html = "";
+            items.reverse();
+            items.forEach(item => {
+                html += `
+                <div class="box">
+                    ${item.message}
+                    <div class="is-size-7 has-text-grey">${item.sign} | ${item.datetime}</div>
+                </div>` 
+            });
+            itemsEl.innerHTML = html;
+        }
+
+        formEl.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const data = {
+                message: formEl.message.value,
+                sign: formEl.sign.value,
+                datetime: ""
+            };
+            const response = await fetch('/items', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (response.ok) {
+                const items = await response.json();
+                fillChatHistory(items);
+                messageEl.value = "";
+            } else {
+                itemsEl.textContent = "Помилка.  " + response.status + " - " + response.statusText ;
+            }
+        });
+    </script>
+</body>
+</html>
