@@ -7,6 +7,8 @@ from fastapi.templating import Jinja2Templates
 from fastapi import Request
 import os
 
+#################### налаштування ###################
+
 app = FastAPI()
 
 # папки static і templates повинні знаходитися в кореневому каталозі пакета
@@ -21,7 +23,7 @@ templates = Jinja2Templates(directory=TEMPLATES_DIR)
 do_test_db()
 
 
-#####################################################
+#################### маршрути #########################
 
 @app.get("/items")
 async def get_items(request: Request):
