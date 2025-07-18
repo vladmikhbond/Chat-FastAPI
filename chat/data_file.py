@@ -10,26 +10,22 @@ def read_all_items() -> list[Item]:
         return [Item(**item) for item in json.load(f)]
 
                   
-def write_all(items: list[Item]):
+def write_all(items: list[Item]) -> None:
     with open(DATA_FILE, "w") as f:
         json.dump([item.__dict__ for item in items], f, ensure_ascii=False, indent=4)
 
 
-def add_item(message: str, sign: str):
+def add_item(message: str, sign: str) -> None:
     item = Item(
         message=message.strip(), 
         sign=sign.strip(), 
         datetime=datetime.now().isoformat())
-    
     items = read_all_items()
-    if item.message != "": 
-        items.append(item)
-        write_all(items)
+    items.append(item)
+    write_all(items)
 
-    return items
 
-def do_test_db():
+def do_test_db() -> None:
     """Виготовлення тестових даних"""
     items = [Item(message=s*4, sign=s, datetime="2025-07-11") for s in ["aaa", "bbb", "ccc"]]
     write_all(items)
-
