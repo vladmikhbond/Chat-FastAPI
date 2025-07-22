@@ -1,3 +1,4 @@
+from typing import Dict
 from fastapi import APIRouter, Request
 from fastapi.templating import Jinja2Templates
 from ..data_alch import read_all_items, add_item
@@ -16,6 +17,7 @@ async def get_items(request: Request):
 @router.post("/items")
 async def post_items(request: Request):
     form = await request.form()
+
     message = form.get("message").strip()
     sign = form.get("sign").strip()
     

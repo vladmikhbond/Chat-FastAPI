@@ -30,7 +30,7 @@ def do_test_db():
     Item.metadata.create_all(engine)
     
     with Session(engine) as session:
-        items = [Item(message=s*4, sign=s, datetime="2025-07-13") for s in ["aaa", "bbb", "ccc"]]
+        items = [Item(message=s*4, sign=s, datetime="2025-07-13") for s in ["aaa", "bbb", "ccc", "ddd"]]
         for item in items:
             session.add(item)       
         session.commit()        
